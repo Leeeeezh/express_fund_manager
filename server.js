@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const mongoose = require('mongoose')
 const { dbSrc } = require('./config/keys.js')
@@ -23,8 +24,12 @@ require('./config/passport.js')(passport)
 app.use('/api/users', users)
 app.use('/api/profiles', profiles)
 app.use(express.static(__dirname + '/client/dist'))
+app.get('*',(req,res)=>{
+  res.sendFile(path.resolve(__dirname,'client', 'dist', 'index.html'))
+})
+
 const port = process.env.PORT || 8088
 
 app.listen(port, () => {
-  console.log(`Server Running On Port ${port}`)
+  console.log('URL ====> 127.0.0.1:8088/')
 })
